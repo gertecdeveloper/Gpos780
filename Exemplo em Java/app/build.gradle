@@ -1,0 +1,72 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'com.exampledv.gpos780'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.exampledv.gpos780"
+        minSdk 22
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('AndroidDefaultDev_Enhanced.jks')
+            storePassword 'GertecDefaultNDevelopmentKeyStore'
+            keyAlias 'androidenhanceddev'
+            keyPassword 'Gertec'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        debug {
+            jniDebuggable true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    implementation files('libs/libgedi-1.16.21-gpos780-payment-release.aar')
+    implementation files('libs/libppcomp-001.32-240506-gpos780-logs.aar')
+//    implementation files('libs/hal-gertec-debug760.aar')
+    implementation files('libs/android-easy-layer-debug_gpos720.aar')
+    implementation 'com.google.code.gson:gson:2.11.0'
+
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+    implementation 'com.google.zxing:core:3.5.1'
+}
